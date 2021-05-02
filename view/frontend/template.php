@@ -53,19 +53,45 @@
                     </div>
                     <div class="our-link">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user s_color"></i> My Account</a></li>
-                            <li><a href="#"><i class="fas fa-location-arrow"></i> Our location</a></li>
-                            <li><a href="#"><i class="fas fa-headset"></i> Contact Us</a></li>
+                            <li><a href="index.php?action=my-account"><i class="fa fa-user s_color"></i> My Account</a></li>
+                            <li><a href="index.php?action=contact-us"><i class="fas fa-location-arrow"></i> Our location</a></li>
+                            <li><a href="index.php?action=contact-us"><i class="fas fa-headset"></i> Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="login-box">
-                        <select id="basic" class="selectpicker show-tick form-control" onChange="window.location.href=this.value">
-                            <option value=""></option>
-                            <option value="index.php?action=checkout">Register Here</option>
-                            <option value="index.php?action=checkout">Sign In</option>
-                        </select>
+                        <!-- <li id="basic" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="index.php?action=checkout">Register Here</a>
+                                <a class="dropdown-item" href="index.php?action=checkout">Sign In</a>
+                            </div>
+                        </li> -->
+
+                        <?php if (isset($_SESSION['user'])) {
+                            $user = $_SESSION['user']; ?>
+                            <div id="basic" class="our-link">
+                                <ul>
+                                    <li><a href="index.php?action=sign-out">Sign Out</a></li>
+                                </ul>
+                            </div>
+                        <?php } else { ?>
+                            <!-- <select id="basic" class="selectpicker show-tick form-control" onChange="window.location.href=this.value">
+                                <option></option>
+                                <option value="index.php?action=checkout">Register Here</option>
+                                <option value="index.php?action=checkout">Sign In</option>
+                            </select> -->
+
+                            <div id="basic" class="our-link">
+                                <ul>
+                                    <li><a href="index.php?action=register">Registe Here</a></li>
+                                    <li><a href="index.php?action=sign-in">Sign In</a></li>
+                                </ul>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
@@ -146,7 +172,7 @@
                         <li class="side-menu">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
+                                <span class="badge"></span>
                                 <p>My Cart</p>
                             </a>
                         </li>
@@ -159,25 +185,28 @@
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
-                        <li>
-                            <a href="#" class="photo"><img src="public/images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="public/images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="public/images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
-                        <li class="total">
-                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
-                        </li>
+                        <?php if (isset($_SESSION['userCartItems'])) {
+                            foreach ($userCartItems as $userCartItem) {
+                                $product = $productManager->get($userCartItem->getProductid()); ?>
+                                <li>
+                                    <a href="#" class="photo"><img src=" <?= $product->getImage(); ?> " class="cart-thumb" alt="" /></a>
+                                    <h6><a href="#"> <?= $product->getName(); ?></a></h6>
+                                    <p> <?= $quantity = $userCartItem->getQuantity(); ?>x -
+                                        <span class="price">
+                                            <?= $price = ($product->getSaleprice() == '' ? $product->getPrice() : $product->getSaleprice()); ?>
+                                        </span>
+                                    </p>
+                                </li>
+                            <?php
+                                $totalPrice += ($price * $quantity);
+                            } ?>
+                            <li class="total">
+                                <a href="index.php?action=cart" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                                <span class="float-right"><strong>Total</strong>: <?= '$' . number_format($totalPrice, 2); ?></span>
+                            </li>
+                        <?php } else { ?>
+                            <p>No product added to cart</p>
+                        <?php } ?>
                     </ul>
                 </li>
             </div>
@@ -216,7 +245,6 @@
         </div>
         <!-- End All Title Box -->
     <?php } ?>
-
     <?= $content; ?>
 
     <!-- Start Instagram Feed  -->
@@ -324,12 +352,12 @@
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
                             <h3>Newsletter</h3>
-                            <form class="newsletter-box">
+                            <form action="index.php?action=subscription" method="post" class="newsletter-box">
                                 <div class="form-group">
-                                    <input class="" type="email" name="Email" placeholder="Email Address*" />
+                                    <input class="" type="email" name="email" placeholder="Email Address*" />
                                     <i class="fa fa-envelope"></i>
                                 </div>
-                                <button class="btn hvr-hover" type="submit">Submit</button>
+                                <button class="btn hvr-hover" type="submit" name="subscription">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -362,7 +390,7 @@
                         <div class="footer-link">
                             <h4>Information</h4>
                             <ul>
-                                <li><a href="#">About Us</a></li>
+                                <li><a href="index.php?action=about-us">About Us</a></li>
                                 <li><a href="#">Customer Service</a></li>
                                 <li><a href="#">Our Sitemap</a></li>
                                 <li><a href="#">Terms &amp; Conditions</a></li>

@@ -12,7 +12,6 @@ class User
         $this->hydrate($data);
     }
 
-
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
@@ -45,7 +44,7 @@ class User
         return $this->_email;
     }
 
-    public function getpassword()
+    public function getPassword()
     {
         return $this->_password;
     }
@@ -56,13 +55,13 @@ class User
     }
 
     //Setters
-    /* public function setId($id)
+    public function setId($id)
     {
         $id = (int) $id;
         if ($id > 0) {
             $this->_id = $id;
         }
-    } */
+    }
 
     public function setFirstname($firstname)
     {
@@ -107,10 +106,5 @@ class User
         if (is_string($password)) {
             $this->_password = $password;
         }
-
-        //hashing
-        password_hash($password, PASSWORD_DEFAULT);
     }
-
-    
 }

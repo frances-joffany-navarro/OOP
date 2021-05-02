@@ -1,43 +1,46 @@
 <?php $title = 'Register';
 ob_start(); ?>
 
-<!-- Start Register  -->
+<!-- Start Sign In -->
 <div class="contact-box-main">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-12 mx-auto">
                 <div class="contact-form-right">
-                    <h2>You dont have an account yet?</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio justo, ultrices ac nisl sed, lobortis porta elit. Fusce in metus ac ex venenatis ultricies at cursus mauris.</p>
-                    <form id="registerForm">
+                    <h2 class="text-center">Create New Account</h2>
+                    <form action="index.php?action=register-new-user" method="post" id="formRegister">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="name" name="firstname" placeholder="Your First Name" required data-error="Please enter your name">
+                                    <label for="InputName" class="mb-0">First Name</label>
+                                    <input type="text" name="firstname" class="form-control" id="InputName" placeholder="First Name">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="name" name="lastname" placeholder="Your Last Name" required data-error="Please enter your name">
+                                    <label for="InputLastname" class="mb-0">Last Name</label>
+                                    <input type="text" name="lastname" class="form-control" id="InputLastname" placeholder="Last Name">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+                                    <label for="InputEmail1" class="mb-0">Email Address</label>
+                                    <input type="email" name="email" class="form-control" id="InputEmail1" placeholder="Enter Email">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="password" placeholder="Your Password" id="password" class="form-control" name="password" required data-error="Please enter your password">
+                                    <label for="InputPassword1" class="mb-0">Password</label>
+                                    <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="submit-button text-center">
-                                    <button class="btn hvr-hover" id="submit" type="submit">Register</button>
+                                    <button type="submit" name="account-register" class="btn hvr-hover">Register</button>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -49,7 +52,7 @@ ob_start(); ?>
         </div>
     </div>
 </div>
-<!-- End Register-->
+<!-- End Sign In-->
 
 <?php
 $content = ob_get_clean();

@@ -1,31 +1,32 @@
 <?php $title = 'Sign In';
 ob_start(); ?>
 
-<!-- Start Register  -->
+<!-- Start Sign In -->
 <div class="contact-box-main">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-12 mx-auto">
                 <div class="contact-form-right">
-                    <h2>You already have an account?</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio justo, ultrices ac nisl sed, lobortis porta elit. Fusce in metus ac ex venenatis ultricies at cursus mauris.</p>
-                    <form id="signInForm">
-                        <div class="row">                            
+                    <h2 class="text-center">Account Login</h2>
+                    <form action="index.php?action=sign-in-user" method="post" id="formLogin">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+                                    <label for="InputEmail" class="mb-0">Email Address</label>
+                                    <input type="email" name="email" class="form-control" id="InputEmail" placeholder="Enter Email">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="password" placeholder="Your Password" id="password" class="form-control" name="password" required data-error="Please enter your password">
+                                    <label for="InputPassword" class="mb-0">Password</label>
+                                    <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="submit-button text-center">
-                                    <button class="btn hvr-hover" id="submit" type="submit">Sign In</button>
+                                    <button type="submit" name="sign-in" class="btn hvr-hover">Login</button>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -37,9 +38,9 @@ ob_start(); ?>
         </div>
     </div>
 </div>
-<!-- End Register-->
+<!-- End Sign In-->
 
-<?php 
-$content = ob_get_clean(); 
+<?php
+$content = ob_get_clean();
 require 'view/frontend/template.php';
 ?>

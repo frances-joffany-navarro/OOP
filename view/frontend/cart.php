@@ -20,78 +20,33 @@ ob_start(); ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="thumbnail-img">
-                                    <a href="#">
-                                        <img class="img-fluid" src="public/images/img-pro-01.jpg" alt="" />
-                                    </a>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        Lorem ipsum dolor sit amet
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>$ 80.0</p>
-                                </td>
-                                <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                <td class="total-pr">
-                                    <p>$ 80.0</p>
-                                </td>
-                                <td class="remove-pr">
-                                    <a href="#">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="thumbnail-img">
-                                    <a href="#">
-                                        <img class="img-fluid" src="public/images/img-pro-02.jpg" alt="" />
-                                    </a>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        Lorem ipsum dolor sit amet
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>$ 60.0</p>
-                                </td>
-                                <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                <td class="total-pr">
-                                    <p>$ 80.0</p>
-                                </td>
-                                <td class="remove-pr">
-                                    <a href="#">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="thumbnail-img">
-                                    <a href="#">
-                                        <img class="img-fluid" src="public/images/img-pro-03.jpg" alt="" />
-                                    </a>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        Lorem ipsum dolor sit amet
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>$ 30.0</p>
-                                </td>
-                                <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                <td class="total-pr">
-                                    <p>$ 80.0</p>
-                                </td>
-                                <td class="remove-pr">
-                                    <a href="#">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            <?php foreach ($userCartItems as $userCartItem) {
+                                $product = $productManager->get($userCartItem->getProductid()); ?>
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+                                            <img class="img-fluid" src=" <?= $product->getImage(); ?> " alt="" />
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+                                            <?= $product->getName(); ?>
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p><?= $price = ($product->getSaleprice() == '' ? $product->getPrice() : $product->getSaleprice()); ?></p>
+                                    </td>
+                                    <td class="quantity-box"><input type="number" size="4" value="<?= $quantity = $userCartItem->getQuantity(); ?>" min="0" step="1" class="c-input-text qty text"></td>
+                                    <td class="total-pr">
+                                        <p><?= number_format($price * $quantity, 2); ?></p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a href="index.php?action=delete-item&id=<?= $userCartItem->getId(); ?>">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -111,7 +66,9 @@ ob_start(); ?>
             </div>
             <div class="col-lg-6 col-sm-6">
                 <div class="update-box">
-                    <input value="Update Cart" type="submit">
+                    <form action="index.php?action=update-cart&id=" method="get">
+                        <input value="Update Cart" name="update-cart" type="submit">
+                    </form>
                 </div>
             </div>
         </div>
@@ -150,7 +107,7 @@ ob_start(); ?>
                     <hr>
                 </div>
             </div>
-            <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a> </div>
+            <div class="col-12 d-flex shopping-box"><a href="index.php?action=checkout" class="ml-auto btn hvr-hover">Checkout</a> </div>
         </div>
 
     </div>
