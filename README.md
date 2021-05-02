@@ -1,5 +1,5 @@
 # Object Oriented Programming
-In this challenge, we will work into a new website called Freshshop. Freshshop already owns the frontend part of the project and we must implement the back-end with NodeJS or PHP in OOP
+In this challenge, we will work into a new website called Freshshop. Freshshop already owns the frontend part of the project and we must implement the back-end with NodeJS or PHP in OOP.
 
 The objective of this project is to implement as many back-end functionalities as possible using Object Oriented Programming and MVC design pattern
 ## Website - coming soon
@@ -14,7 +14,7 @@ The objective of this project is to implement as many back-end functionalities a
 ## The Mission
  - ### Must-have Features
     - All the features of the home page must work
-
+  
     - [x] Register & sign in/out
 
     - [ ] Client account
@@ -22,13 +22,16 @@ The objective of this project is to implement as many back-end functionalities a
     - [ ] Research bar
 
     - [x] Newsletter (only add the email address to the database)
-
-    - [] The shopping cart must work (add / remove / calculate / order) 
+  
+    - [ ] The shopping cart must work (add / remove / calculate / order) 
   
  - ### Nice-to-have Features
     - [ ] All img should be displayed dynamically
+  
     - [ ] The shop filters are working (sidebar shop)
+  
     - [ ] Wishlist
+  
     - [ ] Contact Us
   
  - ### Deliverables
