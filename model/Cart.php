@@ -17,7 +17,6 @@ class Cart
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);
-                
             }
         }
     }
@@ -63,7 +62,7 @@ class Cart
         if (!empty($productId)) {
             $productId = (int) $productId;
             $this->_productId = $productId;
-        }        
+        }
     }
 
     public function setQuantity($quantity)
@@ -72,6 +71,14 @@ class Cart
             $quantity = (int) $quantity;
             $this->_quantity = $quantity;
         }
-        
+    }
+
+    public function isEqual($quantity)
+    {
+        if ($this->getQuantity() == $quantity) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

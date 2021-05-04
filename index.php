@@ -2,10 +2,10 @@
 
 require('./controller/frontend.php');
 
-try {    
+try {
     //start a session
     session_start();
-    
+
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'about-us') {
             aboutUs();
@@ -18,7 +18,11 @@ try {
                 shop();
             }
         } else if ($_GET['action'] == 'cart') {
-            cart();
+            if (isset($_POST['update-cart'])) {
+                updateCart();
+            } else {
+                cart();
+            }
         } else if ($_GET['action'] == 'checkout') {
             checkout();
         } else if ($_GET['action'] == 'my-account') {
@@ -33,7 +37,7 @@ try {
             register();
         } else if ($_GET['action'] == 'sign-in') {
             signIn();
-        }else if ($_GET['action'] == 'register-new-user') {
+        } else if ($_GET['action'] == 'register-new-user') {
             if (isset($_POST['account-register'])) {
                 registerNewUser();
             } else {
@@ -66,8 +70,8 @@ try {
         } elseif ($_GET['action'] == 'delete-item') {
             if (isset($_GET['id'])) {
                 deleteItem($_GET['id']);
-            } 
-        } 
+            }
+        }
     } else {
         homePage();
     }

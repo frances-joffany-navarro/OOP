@@ -101,4 +101,13 @@ class CartManager
 
         return $quantity;
     }
+
+    public function getTotalItemsInCart(Cart $userCart)
+    {
+        $query = $this->_db->prepare('SELECT COUNT(*) FROM user_cart WHERE user_id = :userId');
+        $query->bindValue(':userId', $userCart->getUserid());
+        $query->execute();
+
+        return $query->fetchColumn();
+    }
 }

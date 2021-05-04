@@ -87,7 +87,7 @@
 
                             <div id="basic" class="our-link">
                                 <ul>
-                                    <li><a href="index.php?action=register">Registe Here</a></li>
+                                    <li><a href="index.php?action=register">Register Here</a></li>
                                     <li><a href="index.php?action=sign-in">Sign In</a></li>
                                 </ul>
                             </div>
@@ -205,7 +205,10 @@
                                 <span class="float-right"><strong>Total</strong>: <?= '$' . number_format($totalPrice, 2); ?></span>
                             </li>
                         <?php } else { ?>
-                            <p>No product added to cart</p>
+                            <li class="total">
+                                <p>No product added to cart</p>
+                            </li>
+
                         <?php } ?>
                     </ul>
                 </li>

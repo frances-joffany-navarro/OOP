@@ -125,6 +125,9 @@ function cart()
     $totalPrice = 0;
     $grandPrice = 0;
 
+    /* $userCart = 
+    var_dump($userCartItems->getTotalItemsInCart()); */
+
     require('view/frontend/cart.php');
 }
 
@@ -363,6 +366,35 @@ function addCart()
 
     header('Location: index.php?action=shop');
     exit;
+}
+
+function updateCart()
+{
+    $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
+    //instantiate Cart Manager    
+    $cartManager = new CartManager($db);
+
+    $userCartItems = cartSession();
+
+    foreach ($userCartItems as $userCartItem) {
+        $cartId = $userCartItem->getId();
+        $newQuantity = (int) $_POST["$cartId"];
+        $userCartItem->isEqual($newQuantity);
+
+        if ($newQuantity === 0) {
+            $cartManager->delete($userCartItem);
+        } else if (!$userCartItem->isEqual($newQuantity)) {
+            $userCartItem->setQuantity($newQuantity);
+            $cartManager->update($userCartItem);
+        }
+    }
+    //update user cart
+    $user = userSession();
+    $userId = $user->getId();
+
+    $userCartItems = $cartManager->getCart($userId);
+    $_SESSION['userCartItems'] = $userCartItems;
+    header('Location: index.php?action=cart');
 }
 
 function deleteItem($cartId)
