@@ -1,3 +1,4 @@
+
 <?php $title = 'Checkout';
 ob_start(); ?>
 
@@ -54,7 +55,7 @@ ob_start(); ?>
                 </div>
             </div>
         <?php } else {
-            $user = $_SESSION['user']; 
+            $user = $_SESSION['user'];
         } ?>
         <div class="row">
             <div class="col-sm-6 col-lg-6 mb-3">
@@ -99,12 +100,16 @@ ob_start(); ?>
                         <div class="row">
                             <div class="col-md-5 mb-3">
                                 <label for="country">Country *</label>
-                                <select class="wide w-100" id="country">
-                                    <option value="Choose..." data-display="Select">Choose...</option>
-                                    <option value="United States">United States</option>
+                                <select class="wide w-100" id="country" onchange="getStateByCountry();">
+                                    <option value="" data-display="Select">Choose...</option>
+                                    <?php foreach ($countries as $country) { ?>
+                                        <option value="<?= $country['id']; ?>"><?= $country['name']; ?></option>
+                                    <?php } ?>
+
                                 </select>
                                 <div class="invalid-feedback"> Please select a valid country. </div>
                             </div>
+                            <div id="countryStates"></div>
                             <div class="col-md-4 mb-3">
                                 <label for="state">State *</label>
                                 <select class="wide w-100" id="state">
@@ -213,23 +218,18 @@ ob_start(); ?>
                             <div class="title-left">
                                 <h3>Shopping cart</h3>
                             </div>
-                            <div class="rounded p-2 bg-light">
-                                <div class="media mb-2 border-bottom">
-                                    <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
-                                        <div class="small text-muted">Price: $80.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $80.00</div>
+                            <?php foreach ($userCartItems as $userCartItem) {
+                                $product = $productManager->get($userCartItem->getProductid()); ?>
+                                <div class="rounded p-2 bg-light">
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body"> <a href="detail.html"><?= $product->getName(); ?></a>
+                                            <div class="small text-muted">Price: $<?= $price = ($product->getSaleprice() == '' ? $product->getPrice() : $product->getSaleprice()); ?> <span class="mx-2">|</span> Qty: <?= $quantity = $userCartItem->getQuantity(); ?> <span class="mx-2">|</span> Subtotal: $<?= number_format($price * $quantity, 2); ?></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="media mb-2 border-bottom">
-                                    <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
-                                        <div class="small text-muted">Price: $60.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $60.00</div>
-                                    </div>
-                                </div>
-                                <div class="media mb-2">
-                                    <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
-                                        <div class="small text-muted">Price: $40.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $40.00</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                                $subTotal += $price * $quantity;
+                            } ?>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-12">
@@ -244,29 +244,29 @@ ob_start(); ?>
                             <hr class="my-1">
                             <div class="d-flex">
                                 <h4>Sub Total</h4>
-                                <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                <div class="ml-auto font-weight-bold"> $<?= $subTotal; ?> </div>
                             </div>
                             <div class="d-flex">
                                 <h4>Discount</h4>
-                                <div class="ml-auto font-weight-bold"> $ 40 </div>
+                                <div class="ml-auto font-weight-bold"> $<?= $discount; ?> </div>
                             </div>
                             <hr class="my-1">
                             <div class="d-flex">
                                 <h4>Coupon Discount</h4>
-                                <div class="ml-auto font-weight-bold"> $ 10 </div>
+                                <div class="ml-auto font-weight-bold"> $<?= $couponDiscount; ?> </div>
                             </div>
                             <div class="d-flex">
                                 <h4>Tax</h4>
-                                <div class="ml-auto font-weight-bold"> $ 2 </div>
+                                <div class="ml-auto font-weight-bold"> $<?= $tax; ?> </div>
                             </div>
                             <div class="d-flex">
                                 <h4>Shipping Cost</h4>
-                                <div class="ml-auto font-weight-bold"> Free </div>
+                                <div class="ml-auto font-weight-bold"> <?= $shippingCost; ?> </div>
                             </div>
                             <hr>
                             <div class="d-flex gr-total">
                                 <h5>Grand Total</h5>
-                                <div class="ml-auto h5"> $ 388 </div>
+                                <div class="ml-auto h5"> <?= '$' . number_format(($subTotal - ($discount + $couponDiscount)) + $tax, 2); ?> </div>
                             </div>
                             <hr>
                         </div>

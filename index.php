@@ -24,7 +24,11 @@ try {
                 cart();
             }
         } else if ($_GET['action'] == 'checkout') {
-            checkout();
+            if (isset($_POST['countryId'])) {
+                getState($_POST['countryId']);
+            } else {
+                checkout();
+            }
         } else if ($_GET['action'] == 'my-account') {
             myAccount();
         } else if ($_GET['action'] == 'wishlist') {

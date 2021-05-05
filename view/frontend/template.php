@@ -172,7 +172,7 @@
                         <li class="side-menu">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span class="badge"></span>
+                                <span class="badge"><?= $badge; ?></span>
                                 <p>My Cart</p>
                             </a>
                         </li>
@@ -450,6 +450,7 @@
     <script src="public/js/form-validator.min.js"></script>
     <script src="public/js/contact-form-script.js"></script>
     <script src="public/js/custom.js"></script>
+    <script src="public/js/dropdown.js"></script>
 </body>
 
 </html>

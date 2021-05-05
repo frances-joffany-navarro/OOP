@@ -47,7 +47,11 @@ ob_start(); ?>
                                             </a>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php
+                                    $subTotal += $price * $quantity;
+                                }
+
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -80,29 +84,29 @@ ob_start(); ?>
                     <h3>Order summary</h3>
                     <div class="d-flex">
                         <h4>Sub Total</h4>
-                        <div class="ml-auto font-weight-bold"> $ 130 </div>
+                        <div class="ml-auto font-weight-bold"><?= '$' . number_format($subTotal, 2); ?></div>
                     </div>
                     <div class="d-flex">
                         <h4>Discount</h4>
-                        <div class="ml-auto font-weight-bold"> $ 40 </div>
+                        <div class="ml-auto font-weight-bold"> <?= '$' . number_format($discount); ?> </div>
                     </div>
                     <hr class="my-1">
                     <div class="d-flex">
                         <h4>Coupon Discount</h4>
-                        <div class="ml-auto font-weight-bold"> $ 10 </div>
+                        <div class="ml-auto font-weight-bold"> <?= '$' . number_format($couponDiscount); ?> </div>
                     </div>
                     <div class="d-flex">
                         <h4>Tax</h4>
-                        <div class="ml-auto font-weight-bold"> $ 2 </div>
+                        <div class="ml-auto font-weight-bold"> <?= '$' . number_format($tax); ?> </div>
                     </div>
                     <div class="d-flex">
                         <h4>Shipping Cost</h4>
-                        <div class="ml-auto font-weight-bold"> Free </div>
+                        <div class="ml-auto font-weight-bold"> <?= $shippingCost; ?> </div>
                     </div>
                     <hr>
                     <div class="d-flex gr-total">
                         <h5>Grand Total</h5>
-                        <div class="ml-auto h5"> $ 388 </div>
+                        <div class="ml-auto h5"> <?= '$' . number_format(($subTotal - ($discount + $couponDiscount)) + $tax, 2); ?></div>
                     </div>
                     <hr>
                 </div>

@@ -39,6 +39,10 @@ function homePage()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/home.php');
 }
@@ -53,6 +57,10 @@ function aboutUs()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/about.php');
 }
@@ -72,6 +80,10 @@ function shop()
     $userCartItems = cartSession();
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/shop.php');
 }
@@ -110,6 +122,10 @@ function shopDetail()
     $userCartItems = cartSession();
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/shop-detail.php');
 }
@@ -123,10 +139,17 @@ function cart()
     $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
     $productManager = new ProductManager($db);
     $totalPrice = 0;
-    $grandPrice = 0;
+    $subTotal = 0;
+    $discount = 40;
+    $couponDiscount = 10;
+    $tax = 2;
+    $shippingCost = "Free";
+    $grandTotal = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
-    /* $userCart = 
-    var_dump($userCartItems->getTotalItemsInCart()); */
 
     require('view/frontend/cart.php');
 }
@@ -140,9 +163,44 @@ function checkout()
     $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
     $productManager = new ProductManager($db);
     $totalPrice = 0;
-    $grandPrice = 0;
+    $subTotal = 0;
+    $discount = 40;
+    $couponDiscount = 10;
+    $tax = 2;
+    $shippingCost = "Free";
+    $grandTotal = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
+
+    /* Display Country in dropdown */
+    $countryManager = new CountryManager($db);
+    $countries = $countryManager->getList();
+    //$states = $countryManager->getStateByCountry(1);
+    /* $stateData = '<option value="">State</option>';
+    if (count($states) > 0) {
+        foreach ($states as $state) {
+            $stateData .= '<option value="' . $state['id']. '">' . $state['statename'] . '</option>'; 
+        }
+    } */
 
     require('view/frontend/checkout.php');
+}
+
+function getState($countryId)
+{
+    $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
+    $countryManager = new CountryManager($db);
+    $states = $countryManager->getStateByCountry($countryId);
+
+    $stateData = '<option value="">Choose...</option>';
+    if (count($states) > 0) {
+        foreach ($states as $state) {
+            $stateData .= '<option value="' . $state['id']. '">' . $state['statename'] . '</option>'; 
+        }
+    }
+    echo $stateData;
 }
 
 /**
@@ -155,6 +213,7 @@ function myAccount()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = count($userCartItems);
 
     require('view/frontend/my-account.php');
 }
@@ -169,6 +228,10 @@ function wishlist()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/wishlist.php');
 }
@@ -184,6 +247,10 @@ function gallery()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/gallery.php');
 }
@@ -198,17 +265,33 @@ function contactUs()
     $productManager = new ProductManager($db);
     $totalPrice = 0;
     $grandPrice = 0;
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
 
     require('view/frontend/contact-us.php');
 }
 
 function register()
 {
+    $userCartItems = cartSession();
+    $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
     require('view/frontend/register.php');
 }
 
 function signIn()
 {
+    $userCartItems = cartSession();
+    $db = new PDO('mysql:host=localhost;dbname=freshshop', 'root', '');
+    $badge = 0;
+    if (is_array($userCartItems)) {
+        $badge = count($userCartItems);
+    }
     require('view/frontend/signin.php');
 }
 

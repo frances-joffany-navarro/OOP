@@ -2,7 +2,8 @@
 In this challenge, we will work into a new website called Freshshop. Freshshop already owns the frontend part of the project and we must implement the back-end with NodeJS or PHP in OOP.
 
 The objective of this project is to implement as many back-end functionalities as possible using Object Oriented Programming and MVC design pattern
-## Website - coming soon
+## Website
+[http://freshshop.42web.io/](http://freshshop.42web.io/)
 
 ## Instruction Link
 [https://github.com/becodeorg/BXL-Swartz-4-27/tree/master/2.The-Hill/4.OOP-webShop](https://github.com/becodeorg/BXL-Swartz-4-27/tree/master/2.The-Hill/4.OOP-webShop)
